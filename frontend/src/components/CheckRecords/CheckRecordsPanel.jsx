@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classes from "./CheckRecords.module.scss";
+import '../../sass/base/_utilities.scss';
 
 import CheckRecordsLi from "./CheckRecordsLi";
 import Logo from "../Logo/Logo";
@@ -113,6 +114,7 @@ const CheckRecordsPanel = ({
           onColorRecordsButton={onColorRecordsButton}
           // 4. 'Age records' page
           userAgeRecords={userAgeRecords}
+          onAgeRecordsButton={onAgeRecordsButton}
           resetState={resetState}
         />
       </div>
@@ -122,11 +124,11 @@ const CheckRecordsPanel = ({
   function NavLt860Hide() {
     return (
       <div
-        className={classes.navHideList}
-        style={{
-          marginBottom: dimensions.width < mobileBreakpoint ? 
-            navListMarginBottomLt : navListMarginBottomGt
-        }}
+        className={`${classes.navHideList} u-margin-bottom-small`}
+        // style={{
+        //   marginBottom: dimensions.width < mobileBreakpoint ? 
+        //     navListMarginBottomLt : navListMarginBottomGt
+        // }}
       >
         <div style={{marginLeft: "4%"}}>
           <Logo className={classes.logo} value="Smart Brain" />
@@ -175,12 +177,14 @@ const CheckRecordsPanel = ({
               // 1. 'Home' page
               onHomeButton={onHomeButton}
               // 2. 'Celebrity records' page
+              userCelebrityRecords={userCelebrityRecords}
               onCelebrityRecordsButton={onCelebrityRecordsButton}
               // 3. 'Color records' page
               userColorRecords={userColorRecords}
               onColorRecordsButton={onColorRecordsButton}
               // 4. 'Age records' page
               userAgeRecords={userAgeRecords}
+              onAgeRecordsButton={onAgeRecordsButton}
               resetState={resetState}
             />
           </ul>

@@ -20,7 +20,6 @@ const CelebrityRecords = ( {
     userCelebrityRecords
 } ) => {
     
-
     return (
         <React.Fragment>
             {/* <CheckRecordsPanel /> */}

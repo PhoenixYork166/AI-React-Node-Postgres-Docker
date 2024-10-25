@@ -1,22 +1,42 @@
-# This combination
+<h2>This combination</h2>
 
-![Docker-compose](https://cdn.hashnode.com/res/hashnode/image/upload/v1662313547352/s0Uk-haLQ.jpg)
+<h2>Docker compose</h2>
+<img src="./assets/docker-compose.jpg" alt="docker-compose">
+<br/>
 
-![Clarifai](https://www.clarifai.com/hubfs/AI%20in%205-jpg.jpeg)
+<h2>Clarifai API</h2>
+<img src="./assets/clarifai-api.jpeg" alt="clarifai-api">
+<br/>
 
-![React.js](https://media.licdn.com/dms/image/D4D12AQF26-NZ279EaA/article-cover_image-shrink_600_2000/0/1688018102545?e=2147483647&v=beta&t=Q9aUSt_UHzSqZYyDycri3s2kqVDlPc-YM0ZzlH2yfYc)
+<h2>React</h2>
+<img src="./assets/react.jpg" alt="react">
+<br/>
 
-![Node.js](https://cdn.gabrieleromanato.com/5c37214980b3/uploads/2018/09/nodejs.jpg)
+<h2>Node.js</h2>
+<img src="./assets/nodejs.jpg" alt="nodejs">
+<br/>
 
-![Node.js-file-system](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6uBjgrkG7E1NVUwP_aUap3J_WWgYotCAfEBPks6MI7FxQL9QXc_saB87lFyfzaMALNTnKcrynAMVq8bPZpkJlfnKwzSVb2fC6jTvRaVy32K8NLyORgxzDwZ8P2OeWpH5h70Avfy5nEb3z/s1600/logo-node.jpg)
+<h2>Node.js File System module</h2>
+<img src="./assets/nodejs-fs.jpg" alt="nodejs-fs">
+<br/>
 
-![Node.js-puppeteer](https://raddy.dev/wp-content/uploads/2020/09/nodejs-puppeteer-capturing-website-screenshots_compressed.jpg)
+<h2>Node.js puppeteer</h2>
+<img src="./assets/nodejs-puppeteer.jpg" alt="nodejs-puppeteer">
+<br/>
 
-![Express.js](https://miro.medium.com/v2/resize:fit:1400/1*gyUa6Qx-xcOR1vHg1IoVkw.png)
+<h2>Express</h2>
+<img src="./assets/express-rest-api.png" alt="express-rest-api">
+<br/>
 
-![Express.js](https://techievor.com/api/image-uploads/posts/c25b6f75a581b8a7b8200971ac0e993b.png)
+<h2>Express</h2>
+<img src="./assets/express-rest-api-2.png" alt="express-rest-api-2">
+<br/>
 
-![PostgreSQL](https://raw.githubusercontent.com/docker-library/docs/01c12653951b2fe592c1f93a13b4e289ada0e3a1/postgres/logo.png)
+<h2>PostgreSQL</h2>
+<img src="./assets/postgresql.png" alt="postgresql">
+<br/>
+
+
 
 ##
 ##

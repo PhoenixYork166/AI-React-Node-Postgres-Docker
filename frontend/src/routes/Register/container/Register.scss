@@ -9,12 +9,13 @@
 }
 
 .article {
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    max-width: 100%;
-    box-shadow: 0 1rem 2rem rgba(0,0,0,0.3);
-    overflow: hidden;
-    max-width: 60rem;
-    min-width: 33rem;
+    box-shadow: 0 0.1rem 0.15rem 0rem rgba(0,0,0,0.1);
+    // overflow: hidden;
+    // max-width: 60rem;
+    // min-width: 33rem;
+    min-width: 350px;
 
     &__main {
         .measure {

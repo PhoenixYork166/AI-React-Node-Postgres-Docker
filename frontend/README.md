@@ -7,6 +7,9 @@
 ### Clarifai documentation https://docs.clarifai.com/
 ![Clarifai](https://c8.alamy.com/comp/2NFXR8G/in-this-photo-illustration-the-logo-of-clarifai-is-seen-displayed-on-a-mobile-phone-screen-with-ai-artificial-intelligence-written-in-the-background-2NFXR8G.jpg)
 
+
+
+
 ### 1. To download this React app:
 ```bash
 git clone https://github.com/PhoenixYork166/AI-Recognition.git;

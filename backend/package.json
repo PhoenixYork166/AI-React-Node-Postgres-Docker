@@ -4,14 +4,18 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "PORT=3001 nodemon server.js",
-    "build": "npm i",
+    "start": "node -v && npx puppeteer browsers install chrome && node server.js",
+    "dev": "node -v && PORT=3001 nodemon server.js",
+    "build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "PORT=3001 nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=15"
+  },
   "devDependencies": {
     "nodemon": "^2.0.22"
   },

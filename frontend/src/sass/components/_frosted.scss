@@ -3,6 +3,7 @@
 // Usage 
 //<div className="frosted">
 //  <p className="frosted__container">
+@import '../abstracts/variables';
 
 .frosted {
     // body
@@ -40,5 +41,4 @@
             z-index: -1;
         }
     }
-    
 }

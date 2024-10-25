@@ -5,7 +5,7 @@ body {
     background: linear-gradient(to right, #FF5EDF 0%, #04C8DE 100%);
   /* -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  width: 100vw;
+  min-width: 350px;
   display: flex;
   justify-content: center;
 }

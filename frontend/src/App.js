@@ -23,22 +23,17 @@ import findAge from './util/ai-detection/findAge';
 import calculateFaceLocation from './util/ai-detection/calculateFaceLocation';
 import { returnDateTime } from './util/returnDateTime';
 
+import Cookies from 'js-cookie';
+
 import axios from 'axios';
 
-const localStorage = window.localStorage;
+// const localStorage = window.localStorage;
 
 class App extends Component {
   constructor() {
     super();
-    // const userData = localStorage.getItem('user');
-    // const lastRoute = localStorage.getItem('lastRoute');
-    // const defaultRoute = userData? (lastRoute || 'home') : 'signin';
-    
-    /* Load User's records from localStorage, or set to null if not yet stored */
-    // const userColorRecords = localStorage.getItem('userColorRecords');
-    // const userCelebrityRecords = localStorage.getItem('userCelebrityRecords');
-    // const userAgeRecords = localStorage.getItem('userAgeRecords');
-    
+    // const lastRoute = localStorage.getItem('lastRoute') || 'signin';
+        
     this.state = {
       input: '', // this.state.input => Users' input imageUrl => Can be used for onClick events
       imageUrl: '', // this.state.imageUrl should NOT be used for onClick => React circular references
@@ -54,6 +49,7 @@ class App extends Component {
       responseStatusCode: Number(''),
       // route: defaultRoute,
       route: 'signin',
+      // route: lastRoute,
       isSignedIn: false,
       // isSignedIn: userData ? true : false,
 
@@ -61,55 +57,23 @@ class App extends Component {
       userCelebrityRecords: [],
       userColorRecords: [],
       userAgeRecords: [],
+
       // user: userData ? JSON.parse(userData) : {},      
-
-      // userCelebrityRecords: userCelebrityRecords ? JSON.parse(userCelebrityRecords) : null,       userColorRecords: userColorRecords ? JSON.parse(userColorRecords) : null,
-      // userAgeRecords: userAgeRecords ? JSON.parse(userAgeRecords) : null,
     };
-
     /* this.state.dimensions => Bind methods for handleResize regarding this.handleResize */
     this.handleResize = this.handleResize.bind(this);
-
-    /* Persisting users' signed in sessions */
-    // this.loadUserFromLocalStorage();
-
-    /* loadUserFromLocalStorage(this.setState.bind(this)); */
-    // this.inactivityTimer = null;
   }
 
   componentDidMount() {
-    // this.loadUserFromLocalStorage();
-    // this.resetInactivityTimer();
     this.fetchUserData();
 
     /* Adding EventListener to window 'resize' events */
     window.addEventListener('resize', this.handleResize);
     
-    /* this.state.dimensions => Periodically clean up this.state.dimensions{} in every 5 minutes */
-    // this.dimensionsCleanupTimer = setInterval(() => {
-    //   this.setState({ dimensions: { width: window.innerWidth } });
-    // }, 300000); // Reset this.state.dimensions{} in every 5 minutes
     setInterval(() => {
       this.setState({ dimensions: { width: window.innerWidth } });
-    }, 300000);
-
-    /* this.state.user => Refresh this.state.user every 3 seconds */
-    // this.userRefreshInterval = setInterval(() => {
-    //   this.refreshUserData();
-    // }, 3000);
+    }, 10000);
   }
-
-  /* localStorage refreshUserData */
-  // refreshUserData() {
-  //   // Fetch user data from localStorage
-  //   const updatedUserData = localStorage.getItem('user');
-  //   if (updatedUserData) {
-  //     const user = JSON.parse(updatedUserData);
-  //     if (user !== this.state.user) {
-  //       this.setState({ user });
-  //     }
-  //   }
-  // }
 
   /* Session cookie */
   fetchUserData = () => {
@@ -140,7 +104,7 @@ class App extends Component {
   }
 
   resetUser = () => {
-    this.setState({ user: {}, isSignedIn: false, route: 'signin'}, () => {
+    this.setState({ user: {}, isSignedIn: false, route: 'signin' }, () => {
       // this.removeUserFromLocalStorage();
       console.log(`\nthis.state.isSignedIn after resetUser:\n`,this.state.isSignedIn, `\n`);//true
     })
@@ -154,24 +118,12 @@ class App extends Component {
       this.validateUsers();
       // this.updateLocalStorage('user', this.state.user, prevState.user);
     }
-    /* Storing User's latest route */
-    // if (this.state.route !== prevState.route) {
-    //   localStorage.setItem('lastRoute', this.state.route);
-    // }
-    // this.updateLocalStorage('userCelebrityRecords', this.state.userCelebrityRecords, prevState.userCelebrityRecords);
-    // this.updateLocalStorage('userColorRecords', this.state.userColorRecords, prevState.userColorRecords);
-    // this.updateLocalStorage('userAgeRecords', this.state.userAgeRecords, prevState.userAgeRecords);
-  }
 
-  // updateLocalStorage(key, newValue, oldValue) {
-  //   if (newValue !== oldValue) {
-  //     try {
-  //       localStorage.setItem(key, JSON.stringify(newValue));
-  //     } catch (err) {
-  //       console.error(`\nError updating ${key} in localStorage: `, err, `\n`);
-  //     }
-  //   }
-  // }
+    /* Storing User's latest route */
+    // if (this.state.lastRoute !== prevState.lastRoute) {
+    //   localStorage.setItem('lastRoute', this.state.lastRoute);
+    // }
+  }
   
   componentWillUnmount() {
     // clearTimeout(this.inactivityTimer);
@@ -185,41 +137,10 @@ class App extends Component {
     this.setState({ dimensions: { width: window.innerWidth } });
   }
   
-  resetInactivityTimer = () => {
-    clearTimeout(this.inactivityTimer);
-    // Force users to sign out after 15 minutes (900000 milli-seconds)
-    this.inactivityTimer = setTimeout(this.resetUser, 900000); 
-  }
-
-  /* A callback function that accepts passed-in user to save user to window.localStorage */
-  // saveUserToLocalStorage = (user) => {
-  //   localStorage.setItem('user', JSON.stringify(user));
-  // }
-
-  /* Loading user from local storage */
-  // loadUserFromLocalStorage = () => {
-  //   const userData = localStorage.getItem('user');
-
-  //   if (userData) {
-  //     try {
-  //       this.setState({ 
-  //         user: JSON.parse(userData), 
-  //         isSignedIn: true,
-  //         route: localStorage.getItem('lastRoute') || 'home'
-  //         // ** route: 'home'
-  //       });
-  //     } catch (err) {
-  //       console.error(`\nFailed to parse user data: `, err);
-  //     }
-  //   } else {
-  //     console.log(`\nNo user data was found in local storage\n`);
-  //   }
-  // }
-
-  /* removing user from local storage */
-  // removeUserFromLocalStorage = () => {
-  //   localStorage.removeItem('user');
-  //   localStorage.removeItem('lastRoute');
+  // resetInactivityTimer = () => {
+  //   clearTimeout(this.inactivityTimer);
+  //   // Force users to sign out after 15 minutes (900000 milli-seconds)
+  //   this.inactivityTimer = setTimeout(this.resetUser, 900000); 
   // }
 
   // For Celebrity detection model
@@ -267,9 +188,6 @@ class App extends Component {
       color_hidden: true,
       age_hidden: true,
       responseStatusCode: Number(''),
-      // userCelebrityRecords: null,
-      // userColorRecords: null, // Retrieving User's Color Records from Postgres
-      // userAgeRecords: null
     })
   };
 
@@ -280,11 +198,6 @@ class App extends Component {
       userCelebrityRecords: [],
       userAgeRecords: []
     });
-
-    /* Also remove these items from localStorage */
-    // localStorage.removeItem('userColorRecords');
-    // localStorage.removeItem('userCelebrityRecords');
-    // localStorage.removeItem('userAgeRecords');
   }
 
   // Everytime any of the Detection Models is activated
@@ -323,44 +236,6 @@ class App extends Component {
       });
   }
 
-  // For <SaveColorBtn /> in <ColorRecognition />
-  // Arrow function to send this.state.state_raw_hex_array
-  // to server-side right after setting state for state_raw_hex_array
-  // to avoid delay in server-side
-  loadRawHex = async () => {
-    const devFetchRawHexUrl = 'http://localhost:3001/image';
-    const prodFetchRawHexUrl = 'https://ai-recognition-backend.onrender.com/image';
-    
-    const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchRawHexUrl : devFetchRawHexUrl;
-
-    /* Sending state user.id && state_raw_hex_array to local server-side */
-    // Fetching live Web Server on Render
-    await fetch(fetchUrl, {
-      method: 'put', // PUT (Update) 
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-      id: this.state.user.id,
-      raw_hex: this.state.state_raw_hex_array
-      })
-    })
-    .then(response => response.json()) // string to json
-    .then(fetchedUser => { // entries is coming from server-side response
-    console.log('fetchedUser: ', fetchedUser);
-
-    // Object.assign(target, source)
-    this.setState(Object.assign(this.state.user, {
-      entries: fetchedUser.entries,
-      raw_hex: this.state.state_raw_hex_array
-    }), () => {
-      console.log(`this.state.user.entries is: ${this.state.user.entries}`);
-      console.log(`raw_hex array passed to server-side: ${this.state.state_raw_hex_array}`);
-    })
-    })
-    .catch(err => {
-      console.log(`\nError Fetching ${fetchUrl}:\n${err}\n`)
-    });
-  }
-
   // To be passed to <CheckRecordsPanel /> in src/components/CheckRecords/CheckRecrodsPanel.jsx
   onHomeButton = () => {
     // Reset all state variables to allow proper rendering from Detection Models
@@ -381,8 +256,8 @@ class App extends Component {
     // Change Route to 'colorRecords' => Checkout App.js onRouteChange()
     this.onRouteChange('celebrityRecords');
 
-    const devFetchGetUserCelebrityUrl = 'http://localhost:3001/get-user-celebrity';
-    const prodFetchGetUserCelebrityUrl = 'https://ai-recognition-backend.onrender.com/get-user-celebrity';
+    const devFetchGetUserCelebrityUrl = 'http://localhost:3001/records/get-user-celebrity';
+    const prodFetchGetUserCelebrityUrl = 'https://ai-recognition-backend.onrender.com/records/get-user-celebrity';
 
     const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchGetUserCelebrityUrl : devFetchGetUserCelebrityUrl;
 
@@ -442,8 +317,8 @@ class App extends Component {
     /* From Clarifai API documentation, this API can be consumed as below: */
 
     /* Celebrity Recognition - Fetching local web server for celebrityimage */
-    const devFetchCelebrityImageUrl = 'http://localhost:3001/celebrityimage';
-    const prodFetchCelebrityImageUrl = 'https://ai-recognition-backend.onrender.com/celebrityimage';
+    const devFetchCelebrityImageUrl = 'http://localhost:3001/celebrity-image';
+    const prodFetchCelebrityImageUrl = 'https://ai-recognition-backend.onrender.com/celebrity-image';
 
     const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchCelebrityImageUrl : devFetchCelebrityImageUrl;
 
@@ -489,8 +364,8 @@ class App extends Component {
     // Change Route to 'colorRecords' => Checkout App.js onRouteChange()
     this.onRouteChange('colorRecords');
 
-    const devFetchGetUserColorUrl = 'http://localhost:3001/get-user-color';
-    const prodFetchGetUserColorUrl = 'https://ai-recognition-backend.onrender.com/get-user-color';
+    const devFetchGetUserColorUrl = 'http://localhost:3001/records/get-user-color';
+    const prodFetchGetUserColorUrl = 'https://ai-recognition-backend.onrender.com/records/get-user-color';
 
     const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchGetUserColorUrl : devFetchGetUserColorUrl;
 
@@ -547,8 +422,8 @@ class App extends Component {
     );
 
     /* Color Recognition - Fetching local Web Server vs live Web Server on Render */
-    const devFetchColorImageUrl = 'http://localhost:3001/colorimage';
-    const prodFetchColorImageUrl = 'https://ai-recognition-backend.onrender.com/colorimage';
+    const devFetchColorImageUrl = 'http://localhost:3001/color-image';
+    const prodFetchColorImageUrl = 'https://ai-recognition-backend.onrender.com/color-image';
 
     const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchColorImageUrl : devFetchColorImageUrl;
 
@@ -575,6 +450,53 @@ class App extends Component {
     });
   };
   
+  // Retrieve User's Color Records from Node.js => PostgreSQL
+  onAgeRecordsButton = async () => {
+    // Reset all state variables to allow proper rendering of side-effects
+    this.resetState();
+
+    // Change Route to 'colorRecords' => Checkout App.js onRouteChange()
+    this.onRouteChange('ageRecords');
+
+    const devFetchGetUserColorUrl = 'http://localhost:3001/records/get-user-age';
+    const prodFetchGetUserColorUrl = 'https://ai-recognition-backend.onrender.com/records/get-user-age';
+
+    const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchGetUserColorUrl : devFetchGetUserColorUrl;
+
+    const bodyData = JSON.stringify({
+      userId: this.state.user.id
+    });
+
+    console.log(`\nFetching ${fetchUrl} with bodyData: `, bodyData, `\n`);
+
+    await fetch(fetchUrl, {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: this.state.user.id
+      })
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log(`\nFetched User's Age Records response:\n`, response, `\n`);
+      console.log(`\nFetched User's Age Records response.ageData:\n`, response.ageData, `\n`);
+      // If there's a response upon fetching Clarifai API
+      // fetch our server-side to update entries count too
+      if (response) { 
+        // this.updateEntries();
+        this.setState({
+          userAgeRecords: response.ageData
+        });
+
+      };
+    })
+    .catch((err) => {
+      console.log(`\nError Fetching ${fetchUrl}:\n${err}\n`);
+    });
+
+    console.log(`\nsrc/App.js this.state.userAgeRecords:\n`, this.state.userAgeRecords, `\n`);
+  }
+
   // ClarifaiAPI Age Detection model
   onAgeButton = async () => {
     // Reset all state variables to allow proper rendering from Detection Models
@@ -594,8 +516,8 @@ class App extends Component {
     );
 
     /* Age Recognition - Fetching local dev server vs live Web Server on Render */
-    const devFetchAgeUrl = 'http://localhost:3001/ageimage';
-    const prodFetchAgeUrl = 'https://ai-recognition-backend.onrender.com/ageimage';
+    const devFetchAgeUrl = 'http://localhost:3001/age-image';
+    const prodFetchAgeUrl = 'https://ai-recognition-backend.onrender.com/age-image';
 
     const fetchUrl = process.env.NODE_ENV === 'production' ? prodFetchAgeUrl : devFetchAgeUrl;
 
@@ -687,29 +609,53 @@ class App extends Component {
   };
 
   // src/components/Navigation/Navigation.jsx
-  onSignout = () => {
-    this.setState({
-      celebrity: {},
-      colors: [],
-      age: [],
-    }, 
-    () => this.resetUser(),
-    // () => this.removeUserFromLocalStorage(),
-    () => this.resetState(),
-    () => console.log('this.state.celebrity:\n', this.state.celebrity),
-    () => console.log('this.state.colors:\n', this.state.colors),
-    () => console.log('this.state.age:\n', this.state.age),
-    () => this.onRouteChange('signin'));
-    
-    // this.resetUser();
-    // this.removeUserFromLocalStorage();
-    // this.resetState();
+  onSignout = async () => {
     // this.setState({
     //   celebrity: {},
     //   colors: [],
     //   age: [],
-    // });
-    // this.onRouteChange('signin');
+    //   user: {}
+    // }, () => {
+    //   // After state reset, remove the specific cookies
+    //   // Example: if you know the names of the cookies
+    //   Cookies.remove('userData', { path: '/', secure: process.env.NODE_ENV === 'production' });
+
+    //   // Reset any additional user or app state
+    //   this.resetUser();
+    //   this.resetState();
+
+    //   // Log the updated state for debugging
+    //   console.log('this.state.celebrity:', this.state.celebrity);
+    //   console.log('this.state.colors:', this.state.colors);
+    //   console.log('this.state.age:', this.state.age);
+
+    //   // Change route to 'signin' or any other as necessary
+    //   this.setState({ isSignedIn: false });
+    //   this.onRouteChange('signin');
+    //   }
+    // );
+    const devSignoutUrl = `http://localhost:3001/signout`;
+    const prodSignoutUrl = `https://ai-recognition-backend.onrender.com/signout`;
+    const fetchUrl = process.env.NODE_ENV === 'production' ? prodSignoutUrl : devSignoutUrl;
+
+    await fetch(fetchUrl, {
+      method: 'post',
+      credentials: 'include', // To include credentials for cookies
+    })
+    .then((response) => {
+      this.setState({
+        celebrity: {},
+        colors: [],
+        age: [],
+        user: {},
+        isSignedIn: false
+      }, () => {
+        this.onRouteChange('signin')
+      });
+    })
+    .catch((err) => {
+      console.error(`Error signing out user: `, err, `\n`);
+    })
   }
 
   // To avoid malicious users from breaking in from <Register />
@@ -818,17 +764,12 @@ class App extends Component {
       ),
       'signin': (
         <Signin 
-          // saveUserToLocalStorage={this.saveUserToLocalStorage}
-          // loadUserFromLocalStorage={this.loadUserFromLocalStorage}
           saveUser={this.saveUser}
           onRouteChange={this.onRouteChange} 
         />
-        // <TestMetadataBlob />
       ),
       'register': (
         <Register 
-          // saveUserToLocalStorage={this.saveUserToLocalStorage}
-          // loadUserFromLocalStorage={this.loadUserFromLocalStorage}
           onRouteChange={this.onRouteChange} 
         />
       ),

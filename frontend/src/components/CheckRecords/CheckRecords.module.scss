@@ -15,11 +15,9 @@
 }
 
 .nav {
-    width: 60%;
     display: flex;
-    justify-content: flex-end;
-    flex-flow: row wrap;
-    padding-right: 4%;
+    flex-flow: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -64,6 +62,7 @@
     display: flex;
     flex-flow: column nowrap;
     // align-items: center;
+    justify-content: flex-start;
     align-items: flex-end;
     margin-right: 1rem;
 }
@@ -84,7 +83,7 @@
 .navShowList {
     display: flex;
     flex-direction: row;
-    justify-Content: space-between;
+    justify-content: space-between;
     align-items: center;
     padding-inline: 10;
 }
@@ -188,6 +187,7 @@
     margin-right: 2.2rem;
     color: $text-color;
     // color: rgba($color-secondary-dark, 1);
+    cursor: pointer;
 
     &:hover {
         color: $text-color;

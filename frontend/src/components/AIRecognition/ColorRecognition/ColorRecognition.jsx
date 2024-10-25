@@ -66,8 +66,8 @@ const ColorRecognition = ({
 
         const color_props_array = color_props;
         
-        const devSaveColorUrl = 'http://localhost:3001/save-user-color';
-        const prodSaveColorUrl = 'https://ai-recognition-backend.onrender.com/save-user-color';
+        const devSaveColorUrl = 'http://localhost:3001/records/save-user-color';
+        const prodSaveColorUrl = 'https://ai-recognition-backend.onrender.com/records/save-user-color';
         const fetchUrl = process.env.NODE_ENV === 'production' ? prodSaveColorUrl : devSaveColorUrl;
 
         // Assuming resData is the Blob
@@ -133,8 +133,8 @@ const ColorRecognition = ({
     }
 
     const showModal = () => {
-        // Retrieve DOM element of modal-window pop-up upon users' copy events
-        const modal = document.querySelector('.modal-window');
+        // Retrieve DOM element of modal-color pop-up upon users' copy events
+        const modal = document.querySelector('.modal-color');
             
         modal.style.opacity = 1;
        
@@ -145,46 +145,50 @@ const ColorRecognition = ({
 
     return (
       <React.Fragment>
-        <div className="color-container row" id="color-container">
-            <div className='color-image__modal-container col-1-of-2'>
-                <div className='color-image-box'> 
-                    <img 
-                        className='color-image'
-                        src={imageUrl}
-                        alt="Ooops...It seems the entered URL is BROKEN...Please enter a working URL starting with 'https' in .jpg format"
-                    />
-                </div>
-            </div>
-               
-            <div className="col-1-of-2">
-                <ColorDetails user={user} input={input} color_props={color_props} imageUrl={imageUrl} />        
-            </div>
-        </div>
-        <div className='modal-window'>
-          <h1 class='modal-window--inner'>
-            {responseStatusCode === 200 ? 'Processed!' : 'Failed action' }
-          </h1>
-        </div>
-        {/* Save to Account button */}
-        <div className="saveBtn u-margin-top-small">
-          <button 
-            className="saveBtn__p"
-            onClick={() => { saveColor(); showModal();} } // ColorDetails.jsx saveColor()
-          >
-            Save to Account
-          </button>
-        </div>
-        {/* Save to Device button */}
-        <div className="saveBtn u-margin-top-tiny">
-          <button 
-            className="saveBtn__p"
-            onClick={() => { saveToDevice(htmlToSave); showModal();} } 
-          >
-            Save to Device
-          </button>
-        </div>
-      </React.Fragment>
-    )
+          <div className="color-container row" id="color-container">
+              <div className='modal-container'>
+                  <div className='color-image-box'> 
+                      <img 
+                          className='color-image'
+                          src={imageUrl}
+                          alt="Ooops...It seems the entered URL is BROKEN...Please enter a working URL starting with 'https' in .jpg format"
+                      />
+                  </div>
+              </div>
+                 
+              <div className="color-table col-1-of-2">
+                  <ColorDetails user={user} input={input} color_props={color_props} imageUrl={imageUrl} />        
+              </div>
+          </div>
+          <div className='modal-color'>
+            <h1 class='modal-color--inner'>
+              {responseStatusCode === 200 ? 'Processed!' : 'Failed action' }
+            </h1>
+          </div>
+          {/* Save to Account button */}
+          <div className="saveBtn u-margin-top-small">
+            <button 
+              className="saveBtn__p"
+              onClick={() => { saveColor(); showModal();} } // ColorDetails.jsx saveColor()
+            >
+              Save to Account
+            </button>
+          </div>
+          {/* Save to Device button */}
+          <div className="saveBtn u-margin-top-tiny u-margin-bottom-small">
+            <button 
+              className="saveBtn__p"
+              onClick={() => { 
+                saveToDevice(htmlToSave); 
+                setResponseStatusCode(200); 
+                showModal();
+              }} 
+            >
+              Save to Device
+            </button>
+          </div>
+        </React.Fragment>
+  );
 };
 
 export default ColorRecognition;

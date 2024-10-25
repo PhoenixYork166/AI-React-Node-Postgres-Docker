@@ -7,20 +7,23 @@
 }
 
 .color-page {
-    min-width: 48vw;
-    max-width: 60vw;
-    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
     font-size: 1rem;
-    margin-top: 2vh;
     padding-inline: 2% 2%;
 }
 
 .color-table {
-    width: 48vw;
-    padding-right: 2vw;
+    // width: 48vw;
+    // padding-right: 2vw;
 }
 
 .color-table-image {
+    object-fit: contain;
+    min-width: 350px;
+    max-width: 350px;
     aspect-ratio: 16 / 9;
     width: 30rem;
     height: 20rem;
@@ -31,7 +34,7 @@
     border-radius: 5px;
 }
 .color:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1.5px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -45,7 +48,7 @@
     border-radius: 5px;
 }
 .w3c-color:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1.5px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -60,13 +63,14 @@
 }
 
 .raw-hex, .w3c-color, .w3c-name, .w3c-hex {
-    transition: all .15s ease-in;
+    transition: all .25s ease-in;
     border-radius: 5px;
 }
 
 .raw-hex:hover, .w3c-name:hover, .w3c-hex:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1.5px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
 .raw-hex:active, .w3c-name:active, .w3c-hex:active {

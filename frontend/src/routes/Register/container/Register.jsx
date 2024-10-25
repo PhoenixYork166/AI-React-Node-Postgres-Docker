@@ -209,9 +209,8 @@ class Register extends Component {
             passwordNotEmpty: false
           })
         }
-    };
-  
-  
+  };
+   
   componentDidUpdate(prevProps, prevState) {
       // To keep tracking real-time users' input validations
       if (
@@ -267,12 +266,13 @@ class Register extends Component {
       if (user.id) { /* If we get a user with props => route to 'home'; this.props coming from App.js; Parent App.js front-end will handle user features */
 
         // Invoke App.js saveUserToLocalStorage() passed to this child component as props
-        this.props.saveUserToLocalStorage(user);
+        // this.props.saveUserToLocalStorage(user);
 
         // Invoke App.js loadUserFromLocalStorage() passed to this child component as props
-        this.props.loadUserFromLocalStorage();
+        // this.props.loadUserFromLocalStorage();
 
         this.props.onRouteChange('home');
+
       } else if (!user.id) {
         this.props.onRouteChange('register');
         
@@ -358,8 +358,8 @@ class Register extends Component {
                 <Password
                   onPasswordChange={this.onPasswordChange}
                   password12Char={password12Char}
-
                 />
+                <p className="hint" style={{ opacity: 0 }}>Balancing line-height</p>
                 <PasswordConfirm
                   onPasswordConfirmChange={this.onPasswordConfirmChange}
                   password1SpecialChar={password1SpecialChar}

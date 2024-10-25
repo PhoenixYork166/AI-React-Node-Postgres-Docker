@@ -26,7 +26,6 @@ const handleSignin = (req, res, db, bcrypt) => {
     .where('email', '=', email)
     .from('login')
     .then(response => {
-        // console.log(`/signin\nresponse[0].email: ${response[0].email} \nresponse[0].hash: ${response[0].hash}`)
 
         // Comparing users' password input from req.body.password
         // to server-side fetched json
@@ -42,11 +41,15 @@ const handleSignin = (req, res, db, bcrypt) => {
                     // Store user info in session => return res.status(200).json(user[0]);
                     req.session.user = user[0]; 
 
-                    // return res.status(200).json({
-                    //     success: true,
-                    //     status: { code: 200 },
-                    //     message: `Logged in successfully`
-                    // });
+                    res.cookie('userData', JSON.stringify({
+                        id: user[0].id,
+                        email: user[0].email
+                    }), {
+                        maxAge: 900000, // 15 min
+                        httpOnly: false, // Now accessible to React frontend
+                        secure: process.env.NODE_ENV === 'production'
+                    })
+
                     return res.status(200).json(req.session.user);
                 } else {
                     return res.status(404).json({ 

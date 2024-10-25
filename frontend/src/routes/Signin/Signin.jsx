@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classes from './Signin.module.css';
+import '../../sass/base/_utilities.scss';
 
 // Parent component
 // src/App.js
@@ -68,10 +69,12 @@ class Signin extends Component {
             this.props.onRouteChange('home');
             this.props.saveUser(user); // src/App.js
           } else {
-            // Reset users' inputed password
+          // Reset users' inputed password
           const signInPasswordInput = document.querySelector('#current-password');
-          this.props.onRouteChange('signin');
+          const email = document.querySelector('#email-address');
           signInPasswordInput.value = '';
+          email.value = '';
+          this.props.onRouteChange('signin');
           this.onIncorrect();
           }
         })
@@ -79,30 +82,19 @@ class Signin extends Component {
           console.error(`\nFailed to fetch user data through ${fetchUserUrl}\n`);
         })
       } 
+      else {
+        const signInPasswordInput = document.querySelector('#current-password');
+        const email = document.querySelector('#email-address');
+        signInPasswordInput.value = '';
+        email.value = '';
+        this.props.onRouteChange('signin');
+        this.onIncorrect();
+      }
     })
     .catch((err) => {
       console.error(`\nFailed to fetch ${fetchUrl} for signing users in:\n${err}\n`);
     })
-    // .then(user => { // server.js - app.post('/signin') --> res.json(database.users[i])
-    //   console.log('onSubmitSignIn - response: \n', user);
-    //   console.log('onSubmitSignIn - typeof response: \n', typeof user);
-    //   if (user.id) { // if user.id exists upon successful fetching from db
-    //     // Invoke App.js saveUserToLocalStorage 
-    //     this.props.saveUserToLocalStorage(user);
-
-    //     // Invoke App.js loadUserFromLocalStorage to this.setState(user:{})
-    //     this.props.loadUserFromLocalStorage();
-
-    //     this.props.onRouteChange('home');
-    //   } else if (!user.id) { // if user.id does NOT exist
-    //     // Reset users' inputed password
-    //     const signInPasswordInput = document.querySelector('#current-password');
-    //     this.props.onRouteChange('signin');
-    //     signInPasswordInput.value = '';
-    //     this.onIncorrect();
-    //   }
-    // })
-  }
+  };
 
   validateInputs = () => {
     if (this.state.signInEmail.length > 0 && this.state.signInPassword.length > 0) {
@@ -126,7 +118,7 @@ class Signin extends Component {
     const { onRouteChange } = this.props;
 
     return (
-      <div>
+      <div className="signin u-margin-bottom-medium">
         <article className={`${classes.article}`} >
         <main className={`${classes.main}`}>
           <form className="measure">

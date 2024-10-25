@@ -19,7 +19,7 @@ const AgeRecords = ( {
         <React.Fragment>
             {/* <CheckRecordsPanel /> */}
             <div className="container frosted">
-            <h1 className="recordsHeading frosted__children">Color Records</h1>
+            <h1 className="recordsHeading frosted__children">Age Records</h1>
             <SlideshowAgeRecords 
                 user={user} 
                 isSignedIn={isSignedIn} 

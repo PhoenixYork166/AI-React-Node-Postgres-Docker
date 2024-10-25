@@ -1,5 +1,7 @@
 import React from "react";
 import './ImageLinkForm.scss';
+import '../../sass/components/_frosted.scss';
+
 import useButtonTextRoll from "../../util/buttonTextRoll";
 
 // Passing onInputChange event listener as props to App.js
@@ -9,7 +11,7 @@ const ImageLinkForm = ({
   onColorButton,
   onAgeButton,
 }) => {
-  const placeholder = `Enter .jpg hyperlink e.g. https://wiki.org/image.jpg`;
+  const placeholder = `Enter hyperlink e.g. https://wiki.org/image`;
   const tabs = document.querySelectorAll('.buttons__btn');
 
   return (
@@ -21,8 +23,8 @@ const ImageLinkForm = ({
       </div>
 
       <div className="links">
-        <div className="col-4-of-5">  
-          <div className="link-container">
+        <div className="col-4-of-5 frosted">  
+          <div className="link-container frosted__children">
             <input
               className="link-container__input"
               id="input-inner"

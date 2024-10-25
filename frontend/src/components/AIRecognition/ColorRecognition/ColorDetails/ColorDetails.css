@@ -16,36 +16,48 @@
 }
 
 .color-table {
-    width: 48vw;
-    padding-right: 2vw;
+    /* width: 48vw;
+    padding-right: 2vw; */
 }
 
 .color {
-    transition: all .15s ease-in;
     border-radius: 5px;
+    cursor: pointer;
+    transition: .5s ease-out;
 }
 .color:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .raw-hex {
     max-width: 3.5rem;
     min-width: 3rem;
+    cursor: pointer;
+}
+.raw-hex:hover {
+    transform: translate(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .w3c-color {
-    transition: all .15s ease-in;
     border-radius: 5px;
+    cursor: pointer;
 }
 .w3c-color:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .w3c-name {
-    max-width: 6rem;
+    max-width: 3.5rem;
     min-width: 3rem;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+}
+.w3c-name:hover {
+    transform: translate(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .w3c-hex {
@@ -59,7 +71,7 @@
 }
 
 .raw-hex:hover, .w3c-name:hover, .w3c-hex:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 

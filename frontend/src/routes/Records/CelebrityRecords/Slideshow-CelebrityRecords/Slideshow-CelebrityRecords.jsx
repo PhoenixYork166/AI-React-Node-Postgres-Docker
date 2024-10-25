@@ -4,6 +4,7 @@ import { MaterialSymbol } from 'react-material-symbols';
 import 'react-material-symbols/rounded';
 
 import Loading from "../../../../components/Loading/Loading";
+import '../../../../sass/base/_utilities.scss';
 
 // Parent component
 // 1. src/routes/Records/ColorRecords.jsx
@@ -12,7 +13,7 @@ const SlideshowCelebrityRecords = ( {
     userCelebrityRecords
     } ) => {
     
-    // useState Slideshow officePhotos' index
+    // useState Slideshow Photos' index
     const [activeIndex, setActiveIndex] = useState(0);
     const [blobImages, setBlobImages] = useState([]);
     const indexRef = useRef(activeIndex); // Create a ref to store the current index
@@ -112,19 +113,19 @@ const SlideshowCelebrityRecords = ( {
                         </h3>
                         <p className="slideshow__inner--p">{userCelebrityRecordsArray[activeIndex].date_time}</p>
                         <br/>
-                        <div className="celebrity-page">
+                        <div className="slideshow__inner--celebrity">
                             <h4 className="slideshow__inner--p">
                                 {userCelebrityRecordsArray[activeIndex].celebrity_name}
                             </h4>
-                            <div className="celebrity-image" >
-                                <img className="celebrity-image" src={userCelebrityRecordsArray[activeIndex].image_url} alt="celebrity-blob" />
+                            <div className="slideshow__inner--celebrity" >
+                                <img className="slideshow__inner--celebrityImg" src={userCelebrityRecordsArray[activeIndex].image_url} alt="celebrity-blob" />
                             </div>  
                         </div>
                     </div>
                     
                     <br />
     
-                    <div className="slideshow__btn" 
+                    <div className="slideshow__btn u-margin-bottom-small" 
                         style={{ width: dimensions.width >= mobileBreakpoint ? slideshowWidthGt : slideshowWidthLt }}
                     >
                         <button 

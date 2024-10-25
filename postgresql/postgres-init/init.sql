@@ -119,4 +119,37 @@ CREATE TRIGGER trigger_check_row_limit_on_celebrity_record
 AFTER INSERT ON celebrity_record
 FOR EACH ROW EXECUTE PROCEDURE enforce_row_limit_on_celebrity_record();
 
--- 13.
+-- 13. table `age_record`
+CREATE TABLE age_record (
+	id serial PRIMARY KEY,
+	user_id integer NOT NULL, 
+    age VARCHAR(20) NOT NULL,
+	image_url VARCHAR(255) NOT NULL,
+	image_blob TEXT NOT NULL,
+    metadata TEXT NOT NULL, 
+	date_time timestamp with time zone NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- 14.
+CREATE OR REPLACE FUNCTION enforce_row_limit_on_age_record()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Set max. row to 100 only
+    IF (SELECT COUNT(*) FROM age_record) > 1000 THEN
+        -- Delete entries that exceed the 1000-row limit
+        DELETE FROM age_record
+        WHERE id IN(
+            SELECT id FROM age_record
+            ORDER BY date_time DESC
+            LIMIT (SELECT COUNT(*) - 1000 FROM age_record)
+        );
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 15.
+CREATE TRIGGER trigger_check_row_limit_on_age_record
+AFTER INSERT ON age_record
+FOR EACH ROW EXECUTE PROCEDURE enforce_row_limit_on_age_record();

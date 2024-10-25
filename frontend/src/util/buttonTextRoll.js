@@ -3,6 +3,7 @@ const useButtonTextRoll = (tabs) => {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     tabs.forEach(tab => {
+
         tab.onmouseover = (event) => {
             const target = event.target; // Capture the event target reference
             const finalText = target.dataset.value;
@@ -14,6 +15,9 @@ const useButtonTextRoll = (tabs) => {
 
             let iterations = 0;
             const interval = setInterval(() => {
+                target.style.height = '42px';
+                target.style.width = '80px';
+
                 target.innerText = finalText
                     .split("")
                     .map((char, index) => {
@@ -27,7 +31,7 @@ const useButtonTextRoll = (tabs) => {
                     clearInterval(interval);
                     target.innerText = finalText; // Ensure final text is set after animation
                 }
-            }, 15); // Finish animation in 0.5 second
+            }, 40); // Finish animation in 0.5 second
         }
     });
 }

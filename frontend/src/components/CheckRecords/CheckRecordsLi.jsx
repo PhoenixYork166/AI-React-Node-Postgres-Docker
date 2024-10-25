@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classes from './CheckRecords.module.scss';
 // Util
+
 import useButtonTextRoll from '../../util/buttonTextRoll';
 
 // Parent component
@@ -48,14 +49,14 @@ export default function CheckRecordsLi( {
       >
         Color records
       </button>
-      {/* <button 
+      <button 
         onClick={onAgeRecordsButton}
         onMouseEnter={useButtonTextRoll(tabs)} 
         data-value="Age records"
         className={`${classes.lk} buttons__btn`}
       >
         Age records
-      </button> */}
+      </button>
     </div>
     </React.Fragment>
     )

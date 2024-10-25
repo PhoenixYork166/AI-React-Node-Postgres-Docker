@@ -59,6 +59,7 @@ const Home = ( {
                 // 1. 'Home' page
                 onHomeButton={onHomeButton}
                 // 2. 'Celebrity records' page
+                userCelebrityRecords={userCelebrityRecords}
                 onCelebrityRecordsButton={onCelebrityRecordsButton}
                 // 3. 'Color records' page
                 userColorRecords={userColorRecords}
@@ -92,7 +93,7 @@ const Home = ( {
                 color_props={color_props}
                 color_hidden={color_hidden}
                 name={name}
-                onSaveColorButton={onSaveColorButton}
+                // onSaveColorButton={onSaveColorButton}
                 onRouteChange={onRouteChange}
             />
             <AgeRecognition

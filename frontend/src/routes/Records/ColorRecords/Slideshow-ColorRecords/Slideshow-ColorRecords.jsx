@@ -6,6 +6,7 @@ import 'react-material-symbols/rounded';
 
 import Loading from "../../../../components/Loading/Loading";
 import base64ToBlob from "../../../../util/base64ToBlob";
+import '../../../../sass/base/_utilities.scss';
 
 // Parent component
 // 1. src/routes/Records/ColorRecords.jsx
@@ -184,7 +185,7 @@ const SlideshowColorRecords = ( {
                 
                 <br />
 
-                <div className="slideshow__btn" 
+                <div className="slideshow__btn u-margin-bottom-small" 
                     style={{ width: dimensions.width >= mobileBreakpoint ? slideshowWidthGt : slideshowWidthLt }}
                 >
                     <button 

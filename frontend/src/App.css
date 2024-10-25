@@ -1,8 +1,16 @@
 .App {
   text-align: center;
-  /* min-width: 75rem; */
-  min-height: 62.5rem;
+  /* min-width: 75rem;
+  min-height: 62.5rem; */
   overflow: hidden;
+  position: relative;
+}
+
+@media (max-width: 375px) {
+  .App {
+    margin-top: 30rem;
+    scale: 2;
+  }
 }
 
 /*

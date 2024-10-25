@@ -13,8 +13,7 @@
     align-items: center;    
 
     .recordsHeading {
-        
-        width: 85%;
+        padding: 1rem 1rem;
         color: rgba($font, 1);
         cursor: pointer;
         transition: 0.5s ease-in-out;
@@ -25,8 +24,8 @@
 
         &:hover {
             //color: rgba($font-light, 1);
-            color: linear-gradient(to bottom right, $font-light, $font, $font-dark);
-            box-shadow: 0 0 3rem 1rem rgba($font-light, 0.6);
+            // color: linear-gradient(to bottom right, $font-light, $font, $font-dark);
+            // box-shadow: 0 0 3rem 1rem rgba($font-light, 0.6);
 
             // Frosted when :hover
             border-radius: 1.6rem;
@@ -34,7 +33,7 @@
             //box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(1.5rem);
             -webkit-backdrop-filter: blur(1.5rem);
-            border: 1px solid rgba($font-dark, 0.803);
+            // border: 1px solid rgba($font-dark, 0.803);
             position: relative;
             background: inherit;
             overflow: hidden;

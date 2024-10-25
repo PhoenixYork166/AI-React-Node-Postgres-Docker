@@ -23,13 +23,7 @@ const Navigation = ( {
                     {/* If 'Sign Out' is clicked, nav to 'signin' page */}
                     <p 
                         className={`${classes.navPara}`}
-                        onClick={
-                            onSignout
-                            // resetUser();
-                            // removeUserFromLocalStorage();
-                            // resetState();
-                            // onRouteChange('signin');
-                        } 
+                        onClick={onSignout} 
                     >
                         Sign Out
                     </p>
