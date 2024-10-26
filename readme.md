@@ -1,17 +1,3 @@
-<h2>Cloud Software as a Service hosting</h2>
-<img src="./assets/Cloud-SaaS.jpeg" alt="clarifai" />
-
-<h2>Live React Server on Cloud:</h2>
-<h2>https://ai-recognition-frontend.onrender.com/</h2>
-
-<h2>Live Web Server on Cloud:</h2>
-<h2>https://ai-recognition-backend.onrender.com/</h2>
-
-<h2>Feel free to test my Node.js app using rootDir/.env</h2>
-<h2>The API Key PAT is free of charge</h2>
-<h2>My Cloud SaaS Public IP rules are also set</h2>
-<h2>So please do not worry about my Cloud Web Service instance security</h2>
-
 <h3>Full Stack Technologies used in this Node.js app</h3>
 <ul>
     <li>1. Docker-compose</li>
@@ -69,7 +55,6 @@
 <img src="./assets/Session-Cookie.png" alt="session-cookies" />
 <img src="./assets/Express-Session-Cookies.jpeg" alt="express-session-cookies" />
 
-
 <img alt="REST-API" src="./images/ai-fullstack-nodeapi.jpeg" style="aspect-ratio: 16/9; margin: 0 auto; max-width: 20vw;">
 <br>
 <h2>What if you want to explore this Node.js app more with hands-on?</h2>
@@ -77,6 +62,22 @@
 <h2>You may also edit Postgres connection string using Knex.js inside</h2>
 <h2>projectFolder/util/database.js</h2>
 <img src="./assets//Edit-DB-Knex.jpeg" alt="edit-postgres-knex">
+<br>
+
+<h2>Cloud Software as a Service hosting</h2>
+<img src="./assets/Cloud-SaaS.jpeg" alt="clarifai" />
+
+<h2>Live React Server on Cloud:</h2>
+<h2>https://ai-recognition-frontend.onrender.com/</h2>
+
+<h2>Live Web Server on Cloud:</h2>
+<h2>https://ai-recognition-backend.onrender.com/</h2>
+
+<h2>Feel free to test my Node.js app using rootDir/.env</h2>
+<h2>The API Key PAT is free of charge</h2>
+<h2>My Cloud SaaS Public IP rules are also set</h2>
+<h2>So please do not worry about my Cloud Web Service instance security</h2>
+
 <br>
 
 <h2>Postgre Database Administration</h2>
