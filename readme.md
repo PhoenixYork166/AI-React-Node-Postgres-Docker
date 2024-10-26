@@ -85,7 +85,7 @@
 <h2>To enter psql shell environment</h2>
 
 ```bash
-psql -U postgres -d smart-brain -h 127.0.0.1 -p 5432
+psql -U postgres -d smart-brain -h 127.0.0.1 -p 5433
 ```
 
 <h2>To enter psql shell on Cloud SaaS Render.com</h2>
@@ -105,10 +105,7 @@ git clone https://github.com/PhoenixYork166/Docker-compose.git
 cd Docker-compose
 ```
 
-## Watch out...We'll need to wait for 3 minutes after
-## docker-compose up -d;
-## for Node.js => PostgreSQL microservices to start working properly
-##
+# Building this Full Stack app
 ## 1. Start Docker-compose
 ```bash
 docker-compose up -d;
