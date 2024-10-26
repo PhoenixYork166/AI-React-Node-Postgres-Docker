@@ -1,10 +1,10 @@
-const printDateTime = require('../util/printDateTime').printDateTime;
+const { printDateTime } = require('../util/printDateTime');
 const fs = require('fs').promises;
 const path = require('path');
 const { performance } = require('perf_hooks');
 
 // create / route as an Actuactor for health-checks
-const saveHtml = async (req, res, puppeteer) => {
+exports.saveHtml = async (req, res, puppeteer) => {
     printDateTime();
     const { htmlContent } = req.body;
     const callbackName = `saveHtml`;
@@ -88,8 +88,4 @@ const saveHtml = async (req, res, puppeteer) => {
             });
         }
     }
-};
-
-module.exports = {
-    saveHtml: saveHtml
 };

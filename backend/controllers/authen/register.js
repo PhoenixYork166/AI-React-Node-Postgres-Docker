@@ -1,8 +1,11 @@
 // const printDateTime = require('../util/printDateTime').printDateTime;
-const { printDateTime } = require('../util/printDateTime');
+const { printDateTime } = require('../../util/printDateTime');
 
-// create /register route
-const handleRegister = (req, res, db, bcrypt) => {
+const db = require('../../util/database');
+const bcrypt = require('bcrypt-nodejs');
+
+// POST http://localhost:3001/register
+exports.handleRegister = (req, res) => {
     printDateTime();
 
     // Destructuring from req.body
@@ -45,8 +48,4 @@ const handleRegister = (req, res, db, bcrypt) => {
         .catch(trx.rollback) 
     })
     .catch(err => res.status(400).json({ status: { code: 400 }, error: `Unable to register: ${err}` }));
-}
-
-module.exports = {
-    handleRegister: handleRegister
 };

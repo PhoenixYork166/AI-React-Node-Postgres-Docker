@@ -49,15 +49,35 @@ const SlideshowColorRecords = ( {
     // Convert base64 strings to blobs & store them in this.state
     useEffect(() => {
         if (userColorRecords) {
-            const blobs = userColorRecords.flat().map((record) => {
-                // Assuming 'image/jpeg' is MIME type
-                const blob = base64ToBlob(record.metadata, 'image/jpeg');
-
-                return URL.createObjectURL(blob); // Create a URL for the blob for rendering
-            });
-
-            setBlobImages(blobs);
+            try {
+                const blobs = userColorRecords.flat().map((record) => {
+                    if (!record.metadata) {
+                        console.error("Missing metadata:", record);
+                        return null;
+                    }
+                    const blob = base64ToBlob(record.metadata, 'image/jpeg');
+                    if (!(blob instanceof Blob)) {
+                        console.error("base64ToBlob did not return a Blob:", blob);
+                        return null;
+                    }
+                    return URL.createObjectURL(blob);
+                }).filter(url => url !== null); // Filter out any nulls due to errors
+    
+                setBlobImages(blobs);
+            } catch (error) {
+                console.error("Error creating blob URLs:", error);
+            }
         }
+        // if (userColorRecords) {
+        //     const blobs = userColorRecords.flat().map((record) => {
+        //         // Assuming 'image/jpeg' is MIME type
+        //         const blob = base64ToBlob(record.metadata, 'image/jpeg');
+
+        //         return URL.createObjectURL(blob); // Create a URL for the blob for rendering
+        //     });
+
+        //     setBlobImages(blobs);
+        // }
     }, [userColorRecords]); // Depend on userColorRecords to update blobs
 
 

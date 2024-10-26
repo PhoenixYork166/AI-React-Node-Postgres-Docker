@@ -135,4 +135,4 @@ const transformColorData = (rawData) => {
 
 //module.exports = transformColorData;
 // exports.transformColorData = transformColorData;
-module.exports = transformColorData;
+module.exports = { transformColorData }

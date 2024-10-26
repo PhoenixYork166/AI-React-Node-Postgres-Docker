@@ -2,39 +2,30 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 
-const knex = require('knex');
 const db = require('./util/database');
+const fetch = require('node-fetch');
 
-const root = require('./controllers/root');
-const register = require('./controllers/register');
-const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
-const celebrityRecords = require('./controllers/celebrityRecords');
-const colorRecords = require('./controllers/colorRecords');
-const ageRecords = require('./controllers/ageRecords');
 
-const saveHtml = require('./controllers/saveHtml');
-const fetch = require('node-fetch');
 const puppeteer = require('puppeteer');
+const saveHtml = require('./controllers/saveHtml');
+
 const rootDir = require('./util/path');
 require('dotenv').config({ path: `${rootDir}/.env`});
 
-const printDateTime = require('./util/printDateTime').printDateTime;
-const saveBase64Image = require('./util/saveBase64Image');
+const { printDateTime } = require('./util/printDateTime');
+// 2. Test PostgreSQL connection
+const { testDbConnection } = require('./util/testDbConnection');
+testDbConnection(db);
 
-const transformColorData = require('./util/records-data-transformations/transformColorData');
+const { transformColorData } = require('./util/records-data-transformations/transformColorData');
 
 // Middleware 
 // 1. Requests Logging
 const logger = require('./middleware/requestLogger');
-
-// 2. Test PostgreSQL connection
-const { testDbConnection } = require('./middleware/testDbConnection');
-testDbConnection(db);
 
 console.log(`\n\nprocess.env.POSTGRES_HOST:\n${process.env.POSTGRES_HOST}\n\nprocess.env.POSTGRES_USER:\n${process.env.POSTGRES_USERNAME}\n\nprocess.env.POSTGRES_PASSWORD:\n${process.env.POSTGRES_PASSWORD}\n\n\nprocess.env.POSTGRES_DB:\n${process.env.POSTGRES_DB}\n\n\nprocess.env.POSTGRES_PORT:\n${process.env.POSTGRES_PORT}\n\nprocess.env.NODE_ENV:\n${process.env.NODE_ENV}\n`);
 
@@ -81,60 +72,30 @@ app.get('/api/get-user-data', (req, res) => {
     }
 });
 
-/* Handle User's 'sign out' from React */
-app.post('/signout', (req, res) => {
-    if (req.session) {
-        // Destroy the session and clear the 'userData' cookie.
-        req.session.destroy((err) => {
-            if (err) {
-                return res.status(500).json({ success: false, message: 'Failed to sign out.' });
-            }
-
-            res.clearCookie('userData', { path: '/', secure: process.env.NODE_ENV === 'production' });
-            res.status(200).json({ success: true, message: 'Sign out successful.' });
-        });
-    } else {
-        res.status(200).json({ success: true, message: 'No session to clear.' });
-    }
-});
-
 // Will need either app.use(express.json()) || app.use(bodyParser.json()) to parse json 
 app.use(express.json()); 
 
 // ** Express Middleware for Logging HTTP Requests **
 app.use(logger);
 
-// create a basic route for root
-app.get('/', (req, res) => { root.handleRoot(req, res, db) } );
 
-// create /signin route
-app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) } );
+/* importing Express routers */
+const authRoutes = require('./routes/authRoutes');
+const recordsRoutes = require('./routes/records');
+const imageRoutes = require('./routes/images');
 
-// create /register route
-app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) } );
+/* User's auth routes for rootDir/controllers/authen */
+app.use(authRoutes);
+
+/* User's records routes for rootDir/controllers/records */
+app.use('/records', recordsRoutes);
+
+/* Image routes for rootDir/controllers/image */
+app.use(imageRoutes);
 
 // create /profile/:id route
 // grab via req..params props
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) } );
-
-// create /image
-// increase entries
-app.put('/image', (req, res) => { image.handleImage(req, res, db) } );
-app.post('/celebrity-image', (req, res) => { image.handleCelebrityApi(req, res, fetch) } );
-app.post('/color-image', (req, res) => { image.handleColorApi(req, res, fetch) } );
-app.post('/age-image', (req, res) => { image.handleAgeApi(req, res, fetch) } );
-
-// User's age detection records
-app.post('/records/save-user-age', (req, res) => { ageRecords.saveUserAgeRecords(req, res, db, saveBase64Image) });
-app.post('/records/get-user-age', (req, res) => { ageRecords.getUserAgeRecords(req, res, db)});
-
-// User's color detection records
-app.post('/records/save-user-color', (req, res) => { colorRecords.saveUserColor(req, res, db, saveBase64Image) });
-app.post('/records/get-user-color', (req, res) => { colorRecords.getUserColor(req, res, db, transformColorData) });
-
-// User's celebrity records
-app.post('/records/save-user-celebrity', (req, res) => { celebrityRecords.saveUserCelebrity(req, res, db, saveBase64Image) });
-app.post('/records/get-user-celebrity', (req, res) => { celebrityRecords.getUserCelebrity(req, res, db) });
 
 // For Users to download records to .pdf files to their devices
 app.post('/save-html', async(req, res) => { saveHtml.saveHtml(req, res, puppeteer) });

@@ -1,59 +1,14 @@
 const rootDir = require('../util/path');
 require('dotenv').config({ path: `${rootDir}/controllers/.env`});
 
-const printDateTime = require('../util/printDateTime').printDateTime;
+const db = require('../util/database');
+const fetch = require('node-fetch');
+const { printDateTime } = require('../util/printDateTime');
+const { returnClarifaiRequestOptions } = require('../util/returnClarifaiRequestOptions');
 
-// PUT to update entries
-/* Declaring a custom callback to accept passed-in param 'imageUrl' */
-const returnClarifaiRequestOptions = (imageUrl) => {
-    printDateTime();
+// console.log(returnClarifaiRequestOptions("https://upload.wikimedia.org/wikipedia/commons/4/4d/Beautiful_landscape.JPG"));
 
-    if (!imageUrl || typeof imageUrl !== 'string') {
-      return res.status(500).json({
-        success: false,
-        status: { code: 500 },
-        message: `Invalid inputs`
-      });
-    }
-    
-    const PAT = process.env.PAT;
-    const USER_ID = process.env.USER_ID;
-    const APP_ID = process.env.APP_ID;
-    const IMAGE_URL = imageUrl;
-
-    const callbackName = `returnClarifaiRequestOptions`;
-    console.log(`\nJust received an HTTP request for:\n${callbackName}\n\nimageUrl:\n${imageUrl}\n`);
-  
-    const raw = JSON.stringify({
-      user_app_id: {
-        user_id: USER_ID,
-        app_id: APP_ID
-      },
-      inputs: [
-        {
-          data: {
-            image: {
-              url: IMAGE_URL
-            }
-          }
-        }
-      ]
-    });
-  
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Key ' + PAT
-      },
-      body: raw
-    };
-    return requestOptions;
-};
-
-//   console.log(returnClarifaiRequestOptions("https://upload.wikimedia.org/wikipedia/commons/4/4d/Beautiful_landscape.JPG"));
-
-const handleCelebrityApi = (req, res, fetch) => {
+exports.handleCelebrityApi = (req, res) => {
     const input = req.body.input;
 
     const requestHandlerName = `rootDir/controllers/image.js`;
@@ -95,7 +50,7 @@ const handleCelebrityApi = (req, res, fetch) => {
       });
 };
 
-const handleColorApi = (req, res, fetch) => {
+exports.handleColorApi = (req, res) => {
     const input = req.body.input;
     const requestHandlerName = `handleColorApi`;
 
@@ -135,7 +90,7 @@ const handleColorApi = (req, res, fetch) => {
       });
 };
 
-const handleAgeApi = (req, res, fetch) => {
+exports.handleAgeApi = (req, res) => {
     const input = req.body.input;
     const requestHandlerName = `handleAgeApi`;
 
@@ -175,11 +130,12 @@ const handleAgeApi = (req, res, fetch) => {
       });
 };
 
-const handleImage = (req, res, db) => {
+exports.handleImage = (req, res) => {
   printDateTime();
-  const requestHandlerName = `handleImage`;
 
   const { id } = req.body;
+
+  const requestHandlerName = `handleImage`;
 
   if (!id || typeof id !== 'number') {
     return res.status(400).json({
@@ -202,10 +158,4 @@ const handleImage = (req, res, db) => {
   .catch(err => res.status(400).json(`unable to get entries\n${err}`))
 };
 
-module.exports = {
-    handleImage: handleImage,
-    handleCelebrityApi: handleCelebrityApi,
-    handleColorApi: handleColorApi,
-    handleAgeApi: handleAgeApi
-};
 

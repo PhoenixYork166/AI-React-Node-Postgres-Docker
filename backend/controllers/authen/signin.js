@@ -1,10 +1,12 @@
-const rootDir = require('../util/path');
+const rootDir = require('../../util/path');
 require('dotenv').config({ path: `${rootDir}/controllers/.env`});
+const { printDateTime } = require('../../util/printDateTime');
 
-const printDateTime = require('../util/printDateTime').printDateTime;
+const db = require('../../util/database');
+const bcrypt = require('bcrypt-nodejs');
 
 // create /signin route
-const handleSignin = (req, res, db, bcrypt) => {
+exports.handleSignin = (req, res) => {
     printDateTime();
 
     const { email, password } = req.body;
@@ -82,8 +84,4 @@ const handleSignin = (req, res, db, bcrypt) => {
             error: 'login failed' 
         });
     })
-};
-
-module.exports = {
-    handleSignin: handleSignin
 };

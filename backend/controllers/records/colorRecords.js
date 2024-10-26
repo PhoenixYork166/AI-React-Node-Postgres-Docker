@@ -1,7 +1,11 @@
-const printDateTime = require('../util/printDateTime').printDateTime;
+const rootDir = require('../../util/path');
+require('dotenv').config({ path: `${rootDir}/controllers/.env`});
+const { printDateTime } = require('../../util/printDateTime');
 const { performance } = require('perf_hooks');
+const db = require('../../util/database');
+const { saveBase64Image } = require('../../util/saveBase64Image');
+const { transformColorData } = require('../../util/records-data-transformations/transformColorData');
 
-// Express Request Handler POST route http://localhost:3000/save-user-color
 /* From Frontend React
     // table `image_record`
     // const imageRecord = {
@@ -106,21 +110,15 @@ Batch2
       res.status(500).json({ status: { code: 500 }, success: false, message: `Internal Server Error`, error: err.toString()});
     })
 */
-const saveUserColor = (req, res, db, saveBase64Image) => {
+// Express Request Handler POST route http://localhost:3000/records/save-user-color
+exports.saveUserColor = (req, res) => {
   printDateTime();
   
-  const { userId, imageRecord, imageDetails } = req.body;
-
-  if (typeof userId !== 'number' || !userId || !imageRecord || !imageDetails) {
-    return res.status(500).json({
-      success: false,
-      status: { code: 500 },
-      message: `Invalid inputs`
-    });
-  }
-
+  const { userId, imageBlob, imageRecord, imageDetails } = req.body;
   // Type safety without using TypeScript
+
   const date_time = new Date().toISOString();
+  const requestHandlerName = `rootDir/controllers/records/colorRecords.js\nsaveColor()`;
 
   let userIdInt = parseInt(userId, 10);
   if (isNaN(userIdInt)) {
@@ -128,17 +126,24 @@ const saveUserColor = (req, res, db, saveBase64Image) => {
   }
 
   // console.log(`\nimageRecord.metadata:\n`, imageRecord.metadata, `\n`);
+  // const base64Metadata = JSON.stringify(imageRecord.metadata);
+
   let base64Metadata;
   if (typeof imageRecord.metadata === 'string') {
-    base64Metadata = imageRecord.metadata;
+    try {
+      base64Metadata = JSON.stringify(imageRecord.metadata);
+    } catch (err) {
+      return res.status(400).json({ error: 'Invalid JSON format in metadata' });
+    }
   } else {
-    base64Metadata = JSON.stringify(imageRecord.metadata);
+    JSON.stringify(imageRecord.metadata); // This will throw if metadata is not valid JSON
+    base64Metadata = imageRecord.metadata;
   }
 
   console.log(`\ndateTime: ${date_time}\ntypeof base64Metadata: `, typeof base64Metadata, `\n`);
 
   const start = performance.now();
-  const requestHandlerName = `rootDir/controllers/colorRecords.js\nsaveColor()`;
+  
   console.log(`\nStart processing ${requestHandlerName}\n`);
   console.log(`\nreq.body.userId: `, userId, `\n`);
 
@@ -210,7 +215,6 @@ const saveUserColor = (req, res, db, saveBase64Image) => {
   });
 };
 
-
 /* From PostgreSQL => Replace all 1 to userId */
 /* 
 SELECT 
@@ -241,19 +245,23 @@ WHERE
 ORDER BY 
   ir.date_time DESC;
 */
-const getUserColor = (req, res, db, transformColorData) => {
+// Express Request Handler POST route http://localhost:3000/records/get-user-color
+exports.getUserColor = (req, res) => {
     printDateTime();
     const start = performance.now();
 
-    const requestHandlerName = `rootDir/controllers/colorRecords.js\ngetUserColor()`;
+    const requestHandlerName = `rootDir/controllers/records/colorRecords.js\ngetUserColor()`;
     
     const { userId } = req.body;
+    // console.log(`\ntypeof userId:\n`, typeof userId, `\n`);
 
-    if (!userId || typeof userId !== 'number') {
+    if (typeof userId !== 'number') {
+      console.error(`\n${requestHandlerName} typeof userId!== number\n`);
+      console.error(`\n${requestHandlerName} typeof userId: `, typeof userId, `\n`);
       return res.status(400).json({ 
         success: false, 
         status: { code: 400 }, 
-        message: `Invalid inputs for userId: ${userId} undefined`, 
+        message: `Invalid userId: ${userId} for Express RequestHandler ${requestHandlerName}`
       });
     }
 
@@ -328,14 +336,8 @@ const getUserColor = (req, res, db, transformColorData) => {
       return res.status(500).json({ 
         success: false, 
         status: { code: 500 }, 
-        message: `Failed Express RequestHandler ${requestHandlerName}Internal Server Error`, 
+        message: `Failed Express RequestHandler ${requestHandlerName} Server Internal Error`, 
         error: err.toString()
       });
     });
-};
-
-
-module.exports = {
-    saveUserColor: saveUserColor,
-    getUserColor: getUserColor
 };

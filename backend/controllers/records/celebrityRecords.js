@@ -1,16 +1,19 @@
-const printDateTime = require('../util/printDateTime').printDateTime;
+const rootDir = require('../../util/path');
+
+const { printDateTime } = require('../../util/printDateTime');
 const { performance } = require('perf_hooks');
-const image = require('./image');
+const db = require('../../util/database');
+const { saveBase64Image } = require('../../util/saveBase64Image');
 
-const saveUserAgeRecords = (req, res, db, saveBase64Image) => {
+// Express Request Handler POST route http://localhost:3001/records/save-user-celebrity
+exports.saveUserCelebrity = (req, res) => {
     printDateTime();
-
-    const requestHandlerName = `rootDir/controllers/ageRecord\nsaveUserAgeRecords`;
+    const requestHandlerName = `saveUserCelebrity`;
     console.log(`\nJust received an HTTP request for:\n${requestHandlerName}\n`);
     
-    const { userId, age, imageUrl, imageBlob, metadata, dateTime } = req.body;
+    const { userId, celebrityName, imageUrl, imageBlob, metadata, dateTime } = req.body;
 
-    if (!userId || !age || !imageUrl || !imageBlob || !metadata || typeof userId !== 'number' || typeof age !== 'string' || typeof imageUrl !== 'string' || typeof imageBlob !== 'string' || typeof metadata !== 'string') {
+    if (!userId || !celebrityName || !imageUrl || !imageBlob || !metadata || typeof userId !== 'number' || typeof celebrityName !== 'string' || typeof imageUrl !== 'string' || typeof imageBlob !== 'string' || typeof metadata !== 'string') {
         return res.status(400).json({
             success: false,
             status: { code: 400 },
@@ -29,12 +32,12 @@ const saveUserAgeRecords = (req, res, db, saveBase64Image) => {
     const start = performance.now();
 
     // const date_time = new Date().toISOString();
-    console.log(`\nRequest Handler: `, requestHandlerName, `\n`, `userId: `, userId, `\nage: `, age, `\nimageUrl: `, imageUrl, `\ndateTime: `, dateTime);
+    console.log(`\nRequest Handler: `, requestHandlerName, `\n`, `userId: `, userId, `\ncelebrityName: `, celebrityName, `\nimageUrl: `, imageUrl, `\nimageBlob: `, imageBlob, `\nmetada: `, metadata, `\ndateTime: `, dateTime);
     
-    return db('age_record')
+    return db('celebrity_record')
     .insert({
         user_id: userId,
-        age: age,
+        celebrity_name: celebrityName,
         image_url: imageUrl,
         image_blob: imageBlob,
         metadata: metadata,
@@ -46,7 +49,7 @@ const saveUserAgeRecords = (req, res, db, saveBase64Image) => {
             res.status(500).json({
                 success: false,
                 status: { code: 500 },
-                message: `Failed during ${requestHandlerName} postgres op`
+                message: `Failed during savingUserCelebrity postgres op`
             });
         }
 
@@ -62,16 +65,16 @@ const saveUserAgeRecords = (req, res, db, saveBase64Image) => {
         res.status(200).json({
           success: true,
           status: { code: 200 },
-          message: `saveUserAgeRecord postgresql op completed successfully!`,
+          message: `saveUserCelebrity postgresql op completed successfully!`,
           performance: `Performance: ${duration}ms`
         });
     })
     .catch((err) => {
-        console.error(`Error in saving age detection image:\n`, err, `\n`);
+        console.error(`Error in saving image:\n`, err, `\n`);
         res.status(500).json({
           success: false,
           status: { code: 500 },
-          message: `Failed during saving age detection image to server`,
+          message: `Failed during saving celebrity image to server`,
           error: err.toString()
         });
     });
@@ -80,32 +83,32 @@ const saveUserAgeRecords = (req, res, db, saveBase64Image) => {
 /* PostgreSQL 
 SELECT 
     u.id AS user_id,
-    ar.id AS age_record_id,
-    ar.image_url,
-    ar.image_blob,
-    ar.image_metadata,
-    ar.date_time
+    cr.id AS celebrity_record_id,
+    cr.image_url,
+    cr.image_blob,
+    cr.date_time
 FROM
     users u
 JOIN
-    age_record ar ON u.id = ar.user_id
+    celebrity_record cr ON u.id = cr.user_id
 WHERE
     u.id = 1
-    AND ar.id IN (
-        SELECT ar.id
-        FROM age_record ar 
-        WHERE ar.user_id = 1
-        ORDER BY ar.date_time DESC
+    AND cr.id IN (
+        SELECT cr.id
+        FROM celebrity_record cr 
+        WHERE cr.user_id = 1
+        ORDER BY cr.date_time DESC
         LIMIT 10
     )
 ORDER BY
-    ar.date_time DESC;
+    cr.date_time DESC;
 */
-const getUserAgeRecords = (req, res, db) => {
+// Express Request Handler POST route http://localhost:3001/records/get-user-celebrity
+exports.getUserCelebrity = (req, res) => {
     printDateTime();
     const start = performance.now();
 
-    const requestHandlerName = `rootDir/controllers/ageRecords.js\ngetUserAgeRecords()`;
+    const requestHandlerName = `rootDir/controllers/celebrityRecords.js\ngetUserCelebrity()`;
     
     const { userId } = req.body;
 
@@ -117,25 +120,25 @@ const getUserAgeRecords = (req, res, db) => {
         });
     }
 
-    const subquery = db('age_record as ar')
-    .select('ar.id')
-    .where('ar.user_id', 1)
-    .orderBy('ar.date_time', 'desc')
+    const subquery = db('celebrity_record as cr')
+    .select('cr.id')
+    .where('cr.user_id', 1)
+    .orderBy('cr.date_time', 'desc')
     .limit(10);
 
     const mainQuery = db('users as u')
-        .join('age_record as ar', 'u.id', 'ar.user_id')
+        .join('celebrity_record as cr', 'u.id', 'cr.user_id')
         .select(
             'u.id as user_id',
-            'ar.id as age_record_id',
-            'ar.age',
-            'ar.image_url',
-            'ar.image_blob',
-            'ar.date_time'
+            'cr.id as celebrity_record_id',
+            'cr.celebrity_name',
+            'cr.image_url',
+            'cr.image_blob',
+            'cr.date_time'
         )
         .where('u.id', 1)
-        .whereIn('ar.id', subquery)
-        .orderBy('ar.date_time', 'desc');
+        .whereIn('cr.id', subquery)
+        .orderBy('cr.date_time', 'desc');
 
     // To see the generated SQL
     mainQuery.toSQL().toNative();
@@ -152,8 +155,8 @@ const getUserAgeRecords = (req, res, db) => {
         return res.status(200).json({ 
             success: true, 
             status: { code: 200 }, 
-            message: `Transaction for Express RequestHandler: ${requestHandlerName} completed!`, performance: `Performance for db.transaction(trx) => getUserAgeRecords is: ${duration}ms`,
-            ageData: rows
+            message: `Transaction for Express RequestHandler: ${requestHandlerName} completed!`, performance: `Performance for db.transaction(trx) => getUserCelebrity (records) is: ${duration}ms`,
+            celebrityData: rows
         });
     }).catch(err => {
         console.error(`\nError in Request Handler:\n${requestHandlerName}\nError:\n${err}\n`);
@@ -165,9 +168,4 @@ const getUserAgeRecords = (req, res, db) => {
             error: err.toString()
           });
     });
-}
-
-module.exports = {
-    saveUserAgeRecords: saveUserAgeRecords,
-    getUserAgeRecords: getUserAgeRecords
 };

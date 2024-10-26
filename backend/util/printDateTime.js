@@ -13,5 +13,5 @@ const printDateTime = () => {
     console.log(formattedTime);
 }
 
-exports.printDateTime = printDateTime;
-// module.exports = printDateTime;
+module.exports = { printDateTime };
+// exports.printDateTime = printDateTime;

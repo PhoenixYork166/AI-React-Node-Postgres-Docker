@@ -1,4 +1,4 @@
-const printDateTime = require('../util/printDateTime').printDateTime;
+const { printDateTime } = require('../util/printDateTime');
 
 const handleProfileGet = (req, res, db) => {
     printDateTime();

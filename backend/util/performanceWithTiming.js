@@ -16,4 +16,4 @@ const performWithTiming = (fn, className, methodName) => {
 }
 
 //module.exports = performWithTiming;
-module.exports = performWithTiming;
+module.exports = { performWithTiming };

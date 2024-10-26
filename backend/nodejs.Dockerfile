@@ -77,7 +77,6 @@ RUN apt-get install -y net-tools
 RUN apt-get install -y telnet 
 RUN apt-get install -y netcat-traditional
 RUN apt-get install -y coreutils
-# busybox cat /app/hostname.txt
 RUN apt-get install -y busybox
 
 # Clean up APT when done

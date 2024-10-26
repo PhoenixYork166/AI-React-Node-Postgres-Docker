@@ -1,40 +1,93 @@
-<h2>This combination</h2>
+<h2>Cloud Software as a Service hosting</h2>
+<img src="./assets/Cloud-SaaS.jpeg" alt="clarifai" />
 
-<h2>Docker compose</h2>
-<img src="./assets/docker-compose.jpg" alt="docker-compose">
-<br/>
+<h2>Live React Server on Cloud:</h2>
+<h2>https://ai-recognition-frontend.onrender.com/</h2>
 
-<h2>Clarifai API</h2>
-<img src="./assets/clarifai-api.jpeg" alt="clarifai-api">
-<br/>
+<h2>Live Web Server on Cloud:</h2>
+<h2>https://ai-recognition-backend.onrender.com/</h2>
 
-<h2>React</h2>
-<img src="./assets/react.jpg" alt="react">
-<br/>
+<h2>Feel free to test my Node.js app using rootDir/.env</h2>
+<h2>The API Key PAT is free of charge</h2>
+<h2>My Cloud SaaS Public IP rules are also set</h2>
+<h2>So please do not worry about my Cloud Web Service instance security</h2>
 
-<h2>Node.js</h2>
-<img src="./assets/nodejs.jpg" alt="nodejs">
-<br/>
+<h3>Full Stack Technologies used in this Node.js app</h3>
+<ul>
+    <li>1. Docker-compose</li>
+    <img src="./assets/docker-compose.jpg" alt="docker-compose">
+    <li>2. React & Sass (CSS-preprocessor)</li>
+    
+    <li>3. Node.js</li>
+    <img src="./assets/nodejs.jpg" alt="nodejs" />
+    <li>4. Postgres</li>
+    <img src="./assets/postgresql.png" alt="clarifai" />
+    <li>5. Clarifai AI APIs</li>
+    <img src="./assets/clarifai-api.jpeg" alt="clarifai" />
+    <li>6. Web Scraping using Puppeteer</li>
+    <img src="./assets/nodejs-puppeteer.jpg" alt="clarifai" />
+    <li>7. Cloud Software as a Service on Render</li>
+    <img src="./assets/Cloud-SaaS.jpeg" alt="clarifai" />
+</ul>
 
-<h2>Node.js File System module</h2>
-<img src="./assets/nodejs-fs.jpg" alt="nodejs-fs">
-<br/>
+<h3>Docker-compose is a technology allowing us to bundle our app</h3>
 
-<h2>Node.js puppeteer</h2>
-<img src="./assets/nodejs-puppeteer.jpg" alt="nodejs-puppeteer">
-<br/>
 
-<h2>Express</h2>
-<img src="./assets/express-rest-api.png" alt="express-rest-api">
-<br/>
+<h3>Node.js is a Server-side programming runtime</h3>
+<img src="./assets/nodejs.jpg" alt="nodejs" />
+<h3>Node.js also offers File System module to allow building of command tools</h3>
+<img src="./assets/nodejs-fs.jpg" alt="nodejs" >
 
-<h2>Express</h2>
-<img src="./assets/express-rest-api-2.png" alt="express-rest-api-2">
-<br/>
+<h3>Node.js has a light-weight framework Express for us to build REST APIs</h3>
+<img src="./assets/express-rest-api-2.png" alt="express" />
 
-<h2>PostgreSQL</h2>
-<img src="./assets/postgresql.png" alt="postgresql">
-<br/>
+<h3>Clarifai provides an end-to-end Full Stack enterprise AI platform to build AI faster</h3>
+<h3>Leveraging modern AI technologies like Large Language Modesl (LLM), Generative AI, Retrieval Augmented Genration (RAG), data labeling, inference</h3>
+<img src="./assets/clarifai-api.jpeg" alt="clarifai" />
+
+<h3>You man find out more AI models on</h3>
+<h3>https://clarifai.com/clarifai/main/models/</h3>
+<br>
+<h3>Clarifai offers Face Detection models :D</h3>
+<img src="./assets/Clarifai-Face-Detection.jpeg" alt="clarifai" />
+<br>
+<h3>Clarifai now offers GPT-4 model too :D</h3>
+<img src="./assets/Clarifai-GPT-4-model.jpeg" alt="clarifai" />
+<br>
+
+<h3>Puppeteer is a Web Scraping tool used in Node.js</h3>
+<h3>It leverages outerHTML to scrap data & images from any websites</h3>
+<img src="./assets/nodejs-puppeteer.jpg" alt="puppeteer" />
+
+<h3>This Node.js app also allows Registration with Session Cookies</h3>
+
+<img alt="Register" src="./images/ai-fullstack-register.jpeg" style="aspect-ratio: 16/9; margin: 0 auto; max-width: 20vw;">
+
+<h3>Express REST API for Login Session Cookies</h3>
+<img src="./assets/Session-Cookie.png" alt="session-cookies" />
+<img src="./assets/Express-Session-Cookies.jpeg" alt="express-session-cookies" />
+
+
+<img alt="REST-API" src="./images/ai-fullstack-nodeapi.jpeg" style="aspect-ratio: 16/9; margin: 0 auto; max-width: 20vw;">
+<br>
+<h2>What if you want to explore this Node.js app more with hands-on?</h2>
+<h2>You may edit projectFolder/.env parameters</h2>
+<h2>You may also edit Postgres connection string using Knex.js inside</h2>
+<h2>projectFolder/util/database.js</h2>
+<img src="./assets//Edit-DB-Knex.jpeg" alt="edit-postgres-knex">
+<br>
+
+<h2>Postgre Database Administration</h2>
+<img src="./assets/postgresql.png" alt="postgres" />
+<h2>To enter psql shell environment</h2>
+
+```bash
+psql -U postgres -d smart-brain -h 127.0.0.1 -p 5432
+```
+
+<h2>To enter psql shell on Cloud SaaS Render.com</h2>
+
+<img src="./assets/Postgres-on-Render.jpeg" alt="postgres-on-render" />
 
 
 

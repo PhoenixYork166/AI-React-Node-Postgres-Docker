@@ -23,6 +23,7 @@ console.log('Image file saved:', filepath);
 
 const fs = require('fs');
 const path = require('path');
+
 const saveBase64Image = async (base64Data, userId) => {
     if (!base64Data) {
       console.error(`\nNo base64Data provided for userId: `, userId, `\n`);
@@ -55,4 +56,4 @@ const saveBase64Image = async (base64Data, userId) => {
     }   
 }
 
-module.exports = saveBase64Image;
+module.exports = { saveBase64Image }

@@ -1,7 +1,9 @@
-const printDateTime = require('../util/printDateTime').printDateTime;
+const { printDateTime } = require('../../util/printDateTime');
+
+const db = require('../../util/database');
 
 // create / route as an Actuactor for health-checks
-const handleRoot = (req, res, db) => {
+exports.handleRoot = (req, res) => {
     printDateTime();
 
     const callbackName = `handleRoot`;
@@ -41,6 +43,3 @@ const handleRoot = (req, res, db) => {
     // })
 };
 
-module.exports = {
-    handleRoot: handleRoot
-};
