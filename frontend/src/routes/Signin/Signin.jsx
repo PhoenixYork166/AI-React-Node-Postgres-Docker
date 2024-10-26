@@ -12,7 +12,7 @@ class Signin extends Component {
       signInEmail: '',
       signInPassword: '',
       lockSignIn: true,
-      hint: ''
+      hint: '' // To prompt hint when credentials are incorrect
     }
   }
 
@@ -32,6 +32,11 @@ class Signin extends Component {
   }
 
   onIncorrect = () => {
+    const signInPasswordInput = document.querySelector('#current-password');
+    const email = document.querySelector('#email-address');
+    signInPasswordInput.value = '';
+    email.value = '';
+    this.props.onRouteChange('signin');
     this.setState( { hint: 'Incorrect credentials, try again' });
   }
 
@@ -55,39 +60,12 @@ class Signin extends Component {
       })
     })
     .then(response => response.json()) // http://localhost:3001/signin server response to parse JSON data user
-    .then((response) => {
-      if (response) {
-        // Fetch user data from another endpoint that returns the user data from the session
-        const devFetchUserUrl = `http://localhost:3001/api/get-user-data`;
-        const prodFetchUserUrl = `https://ai-recognition-backend.onrender.com/api/get-user-data`;
-        const fetchUserUrl = process.env.NODE_ENV === 'production' ? prodFetchUserUrl : devFetchUserUrl;
-
-        fetch(fetchUserUrl, { credentials: 'include' })
-        .then(response => response.json())
-        .then((user) => {
-          if (user) {
-            this.props.onRouteChange('home');
-            this.props.saveUser(user); // src/App.js
-          } else {
-          // Reset users' inputed password
-          const signInPasswordInput = document.querySelector('#current-password');
-          const email = document.querySelector('#email-address');
-          signInPasswordInput.value = '';
-          email.value = '';
-          this.props.onRouteChange('signin');
-          this.onIncorrect();
-          }
-        })
-        .catch((err) => {
-          console.error(`\nFailed to fetch user data through ${fetchUserUrl}\n`);
-        })
+    .then((user) => {
+      if (user.id) { // if user is found => check whether user.id exists
+        this.props.saveUser(user); // src/App.js
+        this.props.onRouteChange('home');
       } 
       else {
-        const signInPasswordInput = document.querySelector('#current-password');
-        const email = document.querySelector('#email-address');
-        signInPasswordInput.value = '';
-        email.value = '';
-        this.props.onRouteChange('signin');
         this.onIncorrect();
       }
     })

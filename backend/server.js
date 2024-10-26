@@ -3,15 +3,13 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const db = require('./util/database');
 const fetch = require('node-fetch');
 
 const profile = require('./controllers/profile');
-const image = require('./controllers/image');
 
 const puppeteer = require('puppeteer');
-const saveHtml = require('./controllers/saveHtml');
+const webScrap = require('./controllers/webScrap');
 
 const rootDir = require('./util/path');
 require('dotenv').config({ path: `${rootDir}/.env`});
@@ -21,7 +19,10 @@ const { printDateTime } = require('./util/printDateTime');
 const { testDbConnection } = require('./util/testDbConnection');
 testDbConnection(db);
 
-const { transformColorData } = require('./util/records-data-transformations/transformColorData');
+const app = express(); 
+
+// Assuming .env file sets NODE_ENV as 'production' in production
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Middleware 
 // 1. Requests Logging
@@ -30,23 +31,22 @@ const logger = require('./middleware/requestLogger');
 console.log(`\n\nprocess.env.POSTGRES_HOST:\n${process.env.POSTGRES_HOST}\n\nprocess.env.POSTGRES_USER:\n${process.env.POSTGRES_USERNAME}\n\nprocess.env.POSTGRES_PASSWORD:\n${process.env.POSTGRES_PASSWORD}\n\n\nprocess.env.POSTGRES_DB:\n${process.env.POSTGRES_DB}\n\n\nprocess.env.POSTGRES_PORT:\n${process.env.POSTGRES_PORT}\n\nprocess.env.NODE_ENV:\n${process.env.NODE_ENV}\n`);
 
 // Express middleware
-const app = express(); 
-
-app.use(bodyParser.json({ limit: '100mb' }));
 /* Local dev Middleware for CORS (Cross-Origin-Resource-Sharing) */
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' ? 'https://ai-recognition-frontend.onrender.com' : 'http://localhost:3000',
+    origin: isProduction ? 'https://ai-recognition-frontend.onrender.com' : 'http://localhost:3000',
     credentials: true, // to support session cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 };
+app.use(cors(corsOptions));
 // const corsOptions = {
 //     origin: process.env.NODE_ENV === 'production' ? 'https://ai-recognition-frontend.onrender.com' : 'http://localhost:3000',
 //     credentials: true, // to support session cookies
 //     methods: ['GET', 'POST', 'PUT', 'DELETE']
 // };
 
-app.use(cors(corsOptions));
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(cookieParser());
 
 /* Session cookies */
 app.use(session({
@@ -58,7 +58,7 @@ app.use(session({
         // secure: false, // Set to true in production if using HTTPS
         httpOnly: true, // Prevent client-side scripting attacks
         expires: true, // Session cookie will be removed when user closes browser
-        maxAge: 15 * 60 * 1000 // Expires after 15 min
+        maxAge: 900000 // Expires after 15 min
     } // Use `secure: true` if you are using https
 }));
 
@@ -98,7 +98,7 @@ app.use(imageRoutes);
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db) } );
 
 // For Users to download records to .pdf files to their devices
-app.post('/save-html', async(req, res) => { saveHtml.saveHtml(req, res, puppeteer) });
+app.post('/save-html', async(req, res) => { webScrap.saveHtml(req, res, puppeteer) });
 
 // app.listen(port, fn)
 // fn will run right after listening to a port

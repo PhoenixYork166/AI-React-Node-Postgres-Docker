@@ -770,6 +770,7 @@ class App extends Component {
       ),
       'register': (
         <Register 
+          saveUser={this.saveUser}
           onRouteChange={this.onRouteChange} 
         />
       ),

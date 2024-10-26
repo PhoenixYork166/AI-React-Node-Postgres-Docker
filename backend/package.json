@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node -v && npx puppeteer browsers install chrome && node server.js",
+    "start": "node -v && npx puppeteer browsers install chrome && nodemon server.js",
     "dev": "node -v && PORT=3001 nodemon server.js",
     "build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1",

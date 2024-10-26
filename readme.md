@@ -1,4 +1,11 @@
 <h3>Full Stack Technologies used in this Node.js app</h3>
+<h3>Start testing this Full Stack app on your machine locally</h3>
+
+```bash
+docker-compose up --build;
+```
+
+<br/>
 <ul>
     <li>1. Docker-compose</li>
     <img src="./assets/docker-compose.jpg" alt="docker-compose">
@@ -18,18 +25,22 @@
     <img src="./assets/Cloud-SaaS.jpeg" alt="clarifai" />
 </ul>
 
-<h3>Docker-compose is a technology allowing us to bundle our app</h3>
+<h3>The dev environment:</h3>
+<h3>Docker-compose is a technology allowing us to bundle our Full Stack app through Containerization on any platform e.g. Windows, Linux, AWS EC2</h3>
 <img src="./assets/Docker-compose-2.png" alt="docker-compose-2" />
+<br/>
 
-<h3>Node.js is a Server-side programming runtime</h3>
+<h3>Programming languages involved</h3>
+<h3>Node.js is a Server-side runtime for JavaScript</h3>
 <img src="./assets/nodejs.jpg" alt="nodejs" />
 <h3>Node.js also offers File System module to allow building of command tools</h3>
 <img src="./assets/nodejs-fs.jpg" alt="nodejs" >
-
-<h3>Node.js has a light-weight framework Express for us to build REST APIs</h3>
+<h3>Express is a light-weight framework to build REST APIs</h3>
 <img src="./assets/express-rest-api-2.png" alt="express" />
+<br/>
 
-<h3>Clarifai provides an end-to-end Full Stack enterprise AI platform to build AI faster</h3>
+<h3>Special Technologies involved</h3>
+<h3>Clarifai API provides an end-to-end Full Stack enterprise AI platform to build AI faster</h3>
 <h3>Leveraging modern AI technologies like Large Language Modesl (LLM), Generative AI, Retrieval Augmented Genration (RAG), data labeling, inference</h3>
 <img src="./assets/clarifai-api.jpeg" alt="clarifai" />
 
@@ -41,15 +52,15 @@
 <br>
 <h3>Clarifai now offers GPT-4 model too :D</h3>
 <img src="./assets/Clarifai-GPT-4-model.jpeg" alt="clarifai" />
-<br>
+<br/>
 
 <h3>Puppeteer is a Web Scraping tool used in Node.js</h3>
 <h3>It leverages outerHTML to scrap data & images from any websites</h3>
 <img src="./assets/nodejs-puppeteer.jpg" alt="puppeteer" />
 
-<h3>This Node.js app also allows Registration with Session Cookies</h3>
-
+<h3>This Node.js app also allows Users' Registration with Session Cookies</h3>
 <img alt="Register" src="./images/ai-fullstack-register.jpeg" style="aspect-ratio: 16/9; margin: 0 auto; max-width: 20vw;">
+<br/>
 
 <h3>Express REST API for Login Session Cookies</h3>
 <img src="./assets/Session-Cookie.png" alt="session-cookies" />
@@ -82,7 +93,8 @@
 
 <h2>Postgre Database Administration</h2>
 <img src="./assets/postgresql.png" alt="postgres" />
-<h2>To enter psql shell environment</h2>
+<h2>To enter psql shell environment in Docker</h2>
+<h4>TCP Port 5433 was selected to avoid conflicting with your local Postgres service TCP Port 5432</h4>
 
 ```bash
 psql -U postgres -d smart-brain -h 127.0.0.1 -p 5433

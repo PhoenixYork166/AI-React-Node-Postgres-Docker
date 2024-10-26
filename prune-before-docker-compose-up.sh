@@ -23,7 +23,10 @@ docker ps -a;
 # Remove all docker volumes spawn by docker-compose
 docker-compose down -v;
 
+docker rmi $(docker image ls);
+
 # Force remove all docker volumes
 docker volume rm $(docker volume ls -q);
 echo "Current docker volumes: ";
 docker volume ls;
+docker image ls;
