@@ -16,8 +16,10 @@
 <ul>
     <li>1. Docker-compose</li>
     <img src="./assets/docker-compose.jpg" alt="docker-compose">
-    <li>2. React & Sass (CSS-preprocessor)</li>
-    
+    <li>2. React JSX Frontend</li>
+    <img src="./assets/react.jpg" alt="react" />
+    <li>3. Sass (CSS-preprocessor) for styling</li>
+    <img src="./assets/Sass.webp" alt="sass" />
     <li>3. Node.js</li>
     <img src="./assets/nodejs.jpg" alt="nodejs" />
     <li>4. Postgres</li>
@@ -31,7 +33,7 @@
 </ul>
 
 <h3>Docker-compose is a technology allowing us to bundle our app</h3>
-
+<img src="./assets/Docker-compose-2.png" alt="docker-compose-2" />
 
 <h3>Node.js is a Server-side programming runtime</h3>
 <img src="./assets/nodejs.jpg" alt="nodejs" />
